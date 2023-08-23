@@ -15,7 +15,7 @@ InputHandler::~InputHandler() {
 
 void InputHandler::start() {
     std::cout << "File Transfer Application" << std::endl;
-    std::cout << "Enter 'send' to send a file or 'receive' to receive a file: ";
+    std::cout << "Enter 'send' to send data or 'receive' to receive data: ";
     std::string command;
     std::getline(std::cin, command);
 
@@ -31,12 +31,12 @@ void InputHandler::start() {
 
         std::cin.ignore(); // Ignore the newline character left in the input stream
 
-        std::cout << "Enter the filename to send: ";
-        std::string filename;
-        std::getline(std::cin, filename);
+        std::cout << "Enter the file or folder to send: ";
+        std::string path;
+        std::getline(std::cin, path);
 
         Client client;
-        client.sendFile(serverAddress, serverPort, filename);
+        client.sendData(serverAddress, serverPort, path);
     } else if (command == "receive") {
         // Handle receiving a file
         std::cout << "Enter port to listen on: ";

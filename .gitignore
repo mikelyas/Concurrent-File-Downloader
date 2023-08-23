@@ -33,3 +33,9 @@
 
 # Boost framework
 include
+
+# Build folder
+build
+
+# vscode files
+.vscode

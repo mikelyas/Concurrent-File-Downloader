@@ -1,5 +1,6 @@
 #include "Client.h"
 #include "FileTransfer.h"
+#include "FileSystemHandler.h"
 #include <iostream>
 #include <fstream>
 
@@ -12,12 +13,17 @@ Client::~Client() {
     
 }
 
-void Client::sendFile(const std::string& serverAddress, int serverPort, const std::string& filename) {
-    // Check if the file exists and is valid
-    if (!FileTransfer::validateFile(filename)) {
-        std::cerr << "File not found or invalid: " << filename << std::endl;
+void Client::sendData(const std::string& serverAddress, int serverPort, const std::string& path) {
+    if (!FileSystemHandler::validatePath(path)) {
+        std::cerr << "Path doesn't exist: " << path << std::endl;
         return;
     }
+    bool isFile = FileSystemHandler::isFile(path);
+    if (isFile && !FileSystemHandler::validateFile(path)) {
+        std::cerr << "File is invalid: " << path << std::endl;
+        return;
+    }
+
 
     try {
         boost::asio::io_context io_context;
@@ -26,15 +32,10 @@ void Client::sendFile(const std::string& serverAddress, int serverPort, const st
         boost::asio::ip::tcp::resolver resolver(io_context);
         boost::asio::connect(socket, resolver.resolve(serverAddress, std::to_string(serverPort)));
 
-        // Send the filename to the server
-        std::string request = filename + "\n";
-        boost::asio::write(socket, boost::asio::buffer(request));
-
-        // Send the file data to the server
-        if (FileTransfer::sendFileData(socket, filename)) {
-            std::cout << "File sent successfully." << std::endl;
+        if (FileTransfer::sendData(socket, path)) {
+            std::cout << "Data sent successfully." << std::endl;
         } else {
-            std::cerr << "Error occurred while sending the file." << std::endl;
+            std::cerr << "Error occurred while sending the data." << std::endl;
         }
     } catch (std::exception& e) {
         std::cerr << "Error occurred: " << e.what() << std::endl;

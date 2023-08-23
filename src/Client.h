@@ -9,8 +9,7 @@ public:
     Client();
     ~Client();
 
-    // Function to send a file to the server
-    void sendFile(const std::string& serverAddress, int serverPort, const std::string& filename);
+    void sendData(const std::string& serverAddress, int serverPort, const std::string& path);
 
 private:
     
