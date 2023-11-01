@@ -1,0 +1,5 @@
+add_subdirectory(FileSystemHandler)
+add_subdirectory(FileTransfer)
+add_subdirectory(Client)
+add_subdirectory(Server)
+add_subdirectory(InputHandler)

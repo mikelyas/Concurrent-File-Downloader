@@ -2,10 +2,7 @@
 #define FILESYSTEMHANDLER_H
 
 #include <string>
-// forward declaration
-namespace std::filesystem {
-    class directory_entry;
-}
+#include <filesystem>
 
 
 class FileSystemHandler {

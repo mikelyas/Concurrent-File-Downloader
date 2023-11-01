@@ -2,12 +2,10 @@
 #define FILETRANSFER_H
 
 #include <string>
+#include <filesystem>
 #include <boost/asio.hpp>
 
-// forward declaration
-namespace std::filesystem {
-    class directory_entry;
-}
+
 
 class FileTransfer {
 public:
